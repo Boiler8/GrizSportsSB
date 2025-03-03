@@ -61,3 +61,6 @@ jobs:
           app-name: 'GrizSportsSB'
           package: 'demo-0.0.1-SNAPSHOT.jar'
           startup-command: 'java -jar -Dserver.port=$PORT /home/site/wwwroot/demo-0.0.1-SNAPSHOT.jar'
+
+      - name: Move JAR to /home/site/wwwroot/
+        run: mv demo-0.0.1-SNAPSHOT.jar /home/site/wwwroot/demo-0.0.1-SNAPSHOT.jar
