@@ -1,0 +1,28 @@
+name: Build and Deploy JAR to Azure Web App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'  # Choose your Java version
+
+      - name: Build with Maven
+        run: mvn clean install -DskipTests
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'GrizSportsSB'
+          package: '${{ github.workspace }}/target/demo-0.0.1-SNAPSHOT.jar'  # Path to your JAR file
+          startup-command: 'java -jar /home/site/wwwroot/demo-0.0.1-SNAPSHOT.jar'
