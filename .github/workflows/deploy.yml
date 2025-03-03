@@ -45,7 +45,7 @@ jobs:
         uses: actions/download-artifact@v4  # ✅ Updated to v4
         with:
           name: java-app
-          path: .
+          path: .  # Downloads to the root directory
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -59,8 +59,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'GrizSportsSB'
-          package: 'demo-0.0.1-SNAPSHOT.jar'
+          package: './demo-0.0.1-SNAPSHOT.jar'  # Ensure it's correctly pointed to the downloaded JAR
           startup-command: 'java -jar -Dserver.port=$PORT /home/site/wwwroot/demo-0.0.1-SNAPSHOT.jar'
-
-      - name: Move JAR to /home/site/wwwroot/
-        run: mv demo-0.0.1-SNAPSHOT.jar /home/site/wwwroot/demo-0.0.1-SNAPSHOT.jar
