@@ -31,6 +31,7 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}  # Set this in GitHub secrets
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}  # Set this in GitHub secrets
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  # Set this in GitHub secrets
+          auth-type: 'servicePrinciple'
 
 
       - name: Deploy to Azure Web App
