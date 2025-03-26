@@ -25,8 +25,13 @@ public class UserController {
         user.setPassword(passwordEncoder.encode(request.getPassword()));  // Hash password
         user.setFname(request.getFname());
         user.setLname(request.getLname());
-        user.setUserPerms(request.getUser_perms());
-        // user_perms is not set here; the database default (1) will apply.
+
+        // Default user_perms to 1, unless email contains a specific string
+        if (request.getEmail() != null && request.getEmail().contains("@umconnect.umt.edu")) {
+            user.setUserPerms(2);
+        } else {
+            user.setUserPerms(1);
+        }
 
         userRepository.save(user);
         return "User registered successfully!";
