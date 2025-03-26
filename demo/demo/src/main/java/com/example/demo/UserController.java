@@ -19,6 +19,11 @@ public class UserController {
     // Register a new user (only accepts username, email, password, fname, lname)
     @PostMapping("/add")
     public String addUser(@RequestBody UserRegistrationRequest request) {
+        Optional<User> existingUser = userRepository.findByUsername(request.getUsername());
+        if (existingUser.isPresent()){
+            return "Username is already in use";
+        }
+
         User user = new User();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
