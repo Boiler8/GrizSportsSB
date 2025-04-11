@@ -20,28 +20,28 @@ public class UserController {
     @PostMapping("/add")
     public String addUser(@RequestBody UserRegistrationRequest request) {
         Optional<User> existingUser = userRepository.findByUsername(request.getUsername());
-        if (existingUser.isPresent()){
+        if (existingUser.isPresent()) {
             return "Username is already in use";
-        }
-
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));  // Hash password
-        user.setFname(request.getFname());
-        user.setLname(request.getLname());
-
-        // Default user_perms to 1, unless email contains a specific string
-        if (request.getEmail() != null && request.getEmail().contains("@umconnect.umt.edu")) {
-            user.setUserPerms(2);
         } else {
-            user.setUserPerms(1);
+
+            User user = new User();
+            user.setUsername(request.getUsername());
+            user.setEmail(request.getEmail());
+            user.setPassword(passwordEncoder.encode(request.getPassword()));  // Hash password
+            user.setFname(request.getFname());
+            user.setLname(request.getLname());
+
+            // Default user_perms to 1, unless email contains a specific string
+            if (request.getEmail() != null && request.getEmail().contains("@umconnect.umt.edu")) {
+                user.setUserPerms(2);
+            } else {
+                user.setUserPerms(1);
+            }
+
+            userRepository.save(user);
+            return "User registered successfully!";
         }
-
-        userRepository.save(user);
-        return "User registered successfully!";
     }
-
 
 
     // Login endpoint (validate username & password)
