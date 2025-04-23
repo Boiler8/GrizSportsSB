@@ -8,7 +8,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "http://localhost:8100")
+@CrossOrigin(origins = {"http://localhost:8100", "https://griz-sports.web.app"})
+
 public class UserController {
 
     @Autowired
